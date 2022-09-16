@@ -1,0 +1,70 @@
+/* MINIMAL FONT FAMILY :*/
+/* @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap");
+/* @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap'); */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-gradient {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+*::selection {
+  @apply bg-zinc-500/25 text-zinc-900 dark:bg-zinc-200/25 dark:text-zinc-50;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-750;
+}
+*::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600 rounded-md;
+}
+
+body {
+  @apply bg-gray-50;
+}
+body.dark {
+  @apply bg-gray-850;
+}
+
+body {
+  --primary-400: #50a9f2;
+  --primary-405: #50a9f288;
+  --primary-500: #2494ef;
+  --primary-505: #2494ef88;
+  --primary-502: #2494ef33;
+  --primary-500: #2494ef;
+  --primary-600: #1d76bf;
+  --primary-605: #1d76bf88;
+  --primary-602: #1d76bf33;
+  --secondary-400: #34d399;
+  --secondary-405: #34d39988;
+  --secondary-500: #2aa97a;
+  --secondary-505: #2aa97a88;
+  --secondary-502: #2aa97a33;
+  --secondary-600: #1f7f5c;
+  --secondary-605: #1f7f5c88;
+  --secondary-602: #1f7f5c33;
+  @apply text-gray-700;
+}
+body.green {
+}
+body.dark.green {
+  --secondary-400: #5ddcad;
+  --secondary-405: #5ddcad88;
+  --secondary-500: #34d399;
+  --secondary-505: #34d39988;
+  --secondary-502: #34d39933;
+  --secondary-600: #2aa97a;
+  --secondary-605: #2aa97a88;
+  --secondary-602: #2aa97a33;
+}
+body.dark {
+  @apply text-gray-200;
+}

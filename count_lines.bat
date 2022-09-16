@@ -1,0 +1,1 @@
+cloc.exe ./src tailwind.config.js postcss.config.js svelte.config.js package.json
