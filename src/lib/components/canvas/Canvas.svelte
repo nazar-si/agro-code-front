@@ -3,7 +3,10 @@
   import { Line } from "tabler-icons-svelte";
   export let width;
   export let height;
+  export let hideGrid = false;
   let gridSize = 32;
+  let visualGrid = gridSize;
+  let gridResizeFactor = 4;
   export let X;
   export let Y;
   export let scale;
@@ -210,21 +213,30 @@
     p5.draw = () => {
       p5.background(250);
       p5.translate(p5.width / 2, p5.height / 2);
-      let sw = p5.width / (gridSize * scale);
-      let sh = p5.height / (gridSize * scale);
-      let dx = Math.floor(X);
-      let ty = c.iny(-p5.height / 2);
-      let by = c.iny(p5.height / 2);
-      let dy = Math.floor(Y);
-      let lx = c.inx(-p5.width / 2);
-      let rx = c.inx(p5.width / 2);
-      p5.stroke(0, 10);
-      p5.strokeWeight(2);
-      for (let i = Math.ceil(-sw / 2); i < sw / 2 + 1; i++) {
-        c.line(i + dx, ty, i + dx, by);
-      }
-      for (let i = Math.ceil(-sh / 2); i < sh / 2 + 1; i++) {
-        c.line(lx, i + dy, rx, i + dy);
+      if (!hideGrid) {
+        visualGrid =
+          Math.max(
+            1,
+            gridResizeFactor **
+              Math.ceil(-Math.log(scale) / Math.log(gridResizeFactor))
+          ) * gridSize;
+        let sw = p5.width / (visualGrid * scale);
+        let sh = p5.height / (visualGrid * scale);
+        let rel = visualGrid / gridSize;
+        let dx = Math.floor(X / rel);
+        let ty = c.iny(-p5.height / 2);
+        let by = c.iny(p5.height / 2);
+        let dy = Math.floor(Y / rel);
+        let lx = c.inx(-p5.width / 2);
+        let rx = c.inx(p5.width / 2);
+        p5.stroke(0, 10);
+        p5.strokeWeight(2);
+        for (let i = Math.ceil(-sw / 2); i < sw / 2 + 1; i++) {
+          c.line((i + dx) * rel, ty, (i + dx) * rel, by);
+        }
+        for (let i = Math.ceil(-sh / 2); i < sh / 2 + 1; i++) {
+          c.line(lx, (i + dy) * rel, rx, (i + dy) * rel);
+        }
       }
       c.mouseX = p5.mouseX;
       c.mouseY = p5.mouseY;
