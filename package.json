@@ -29,6 +29,7 @@
     "@fontsource/fira-mono": "^4.5.0",
     "cookie": "^0.4.1",
     "cuid": "^2.1.8",
+    "p5-svelte": "^3.1.2",
     "tabler-icons-svelte": "^1.8.0",
     "tailwindcss-global-dark": "^1.0.1"
   }

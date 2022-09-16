@@ -1,72 +1,68 @@
 <script lang="ts">
-  let dark = false;
-  import { Moon, Sun } from "tabler-icons-svelte";
-  let width = 20;
-  let height = 20;
+  let width;
+  let height;
+  let scale = 1;
+  let X = 0;
+  let Y = 0;
+  import Canvas from "$lib/components/canvas/Canvas.svelte";
+  import color from "$lib/color";
+
+  const init = () => {
+    // код, который исполняется при создании сетки
+  };
+  const update = (cx) => {
+    cx.stroke(0, 0, 0, 50); // установить цвет линии / обводки "руками"
+    cx.strokeWeight(2); // задать ширину линии
+    cx.line(-2.5, 0, 2.5, 0);
+    cx.line(-2.5, 1, 2.5, 1);
+    cx.line(-2.5, 2, 2.5, 2);
+    cx.line(-2.5, -1, 2.5, -1);
+    cx.line(-2.5, -2, 2.5, -2);
+    cx.line(0, -2.5, 0, 2.5);
+    cx.line(1, -2.5, 1, 2.5);
+    cx.line(2, -2.5, 2, 2.5);
+    cx.line(-1, -2.5, -1, 2.5);
+    cx.line(-2, -2.5, -2, 2.5);
+    cx.stroke(color.dark); // цвет линии / обводки из моей библиотеки
+    cx.rect(0.2, 0.2, 0.6, 0.6, 0.1);
+    cx.stroke(color.primary);
+    cx.fill(color.transparent); // цвет заливки (аналогично обводке)
+    cx.rect(0.2 - 2, 0.2 - 1, 0.6, 0.6, 0.1, 0.3, 0.3, 0.1);
+    cx.stroke(color.blue);
+    cx.ellipse(0.5 + 1, 0.5 - 2, 0.6, 0.6);
+    cx.strokeWeight(0.2, true); // true говорит о том, что ширина линии будет задаваться в координатах сетки и зависит от приближения
+    // P.S. ширина линии влияет на размер точки cx.point
+    cx.point(Math.round(cx.mx * 2) / 2, Math.round(cx.my * 2) / 2); // mx, my - координаты мыши в пространстве координат моей сетки
+  };
 </script>
 
-<main>
-  <button
-    on:click={() => {
-      dark = !dark;
-      dark
-        ? document.body.classList.add("dark")
-        : document.body.classList.remove("dark");
-    }}
-    >Theme {#if dark}<Moon />{:else}<Sun />{/if}</button
-  >
-  <button class="secondary">Secondary</button>
-  <div class="label">Primary color</div>
-  <div class="label secondary">Secondary color</div>
-  <div class="grid" style:grid-template-columns="repeat({width}, 1fr)">
-    {#each Array.from(Array(height).keys()) as i}
-      {#each Array.from(Array(width).keys()) as j}
-        <div
-          class="entry"
-          style:opacity={Math.abs(
-            (Math.sin(j / 7 + 2) * Math.sin(i / 8 + 3)) / 2 +
-              Math.sin(i / 3) * Math.cos(j / 3)
-          ) +
-            Math.random() / 7}
-        />
-      {/each}
-    {/each}
-  </div>
-</main>
+<div class="wrapper">
+  <side
+    >Боковая панель
+    <br />
+    <input type="range" bind:value={scale} min="0.1" max="2" step="0.01" />
+    <br />
+    <input type="range" bind:value={X} min="-10" max="10" step="0.01" />
+    <br />
+    <input type="range" bind:value={Y} min="-10" max="10" step="0.01" />
+  </side>
+  <main bind:clientHeight={height} bind:clientWidth={width}>
+    <Canvas {width} {height} {scale} bind:X bind:Y {update} {init} />
+  </main>
+</div>
 
 <style lang="postcss">
-  button {
+  .wrapper {
     display: flex;
-    gap: 1rem;
-    @apply transition-all;
-    @apply m-4 p-2 rounded-md border-1 border-gray-350 gdark:border-gray-500 gdark:hover:border-primary hover:border-primary hover:text-primary;
-  }
-  button.secondary {
-    @apply hover:border-secondary gdark:hover:border-secondary hover:!text-secondary;
-  }
-  .label {
-    width: fit-content;
-    @apply text-sm font-semibold text-white;
-    @apply px-2 m-2 bg-primary rounded-2xl border-primary-600 gdark:border-primary-400;
-    &.secondary {
-      @apply bg-secondary border-secondary-600 gdark:border-secondary-400;
+    height: 100vh;
+    side {
+      width: 300px;
+      height: 100%;
+      @apply bg-gray-100 border-r-1 border-gray-300;
     }
-  }
-  .grid {
-    display: grid;
-
-    width: fit-content;
-    gap: 0.25rem;
-    margin: 0.5rem;
-    padding: 0.5rem;
-    @apply border-1 border-gray-300 gdark:border-gray-600 rounded-md;
-    .entry {
-      box-shadow: 0 0 0 #0000;
-      @apply w-4 h-4 bg-primary gdark:bg-secondary-500 rounded-sm transition-all;
-      @apply hover:!opacity-100 hover:bg-blue-500 gdark:hover:bg-blue-500;
-      &:hover {
-        box-shadow: 0 0 15px 3px #0084ff;
-      }
+    main {
+      flex: 1;
+      height: 100%;
     }
   }
 </style>
