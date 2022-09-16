@@ -16,6 +16,13 @@
   <button class="secondary">Secondary</button>
   <div class="label">Primary color</div>
   <div class="label secondary">Secondary color</div>
+  <div class="grid">
+    {#each Array.from(Array(10).keys()) as i}
+      {#each Array.from(Array(10).keys()) as i}
+        <div class="entry" />
+      {/each}
+    {/each}
+  </div>
 </main>
 
 <style lang="postcss">
@@ -35,5 +42,8 @@
     &.secondary {
       @apply bg-secondary border-secondary-600 gdark:border-secondary-400;
     }
+  }
+  .entry {
+    @apply w-4 h-4 bg-primary-500 rounded-sm;
   }
 </style>
