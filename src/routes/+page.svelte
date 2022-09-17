@@ -37,15 +37,7 @@
 </script>
 
 <div class="wrapper">
-  <side
-    >Боковая панель{scale}
-    <br />
-    <input type="range" bind:value={scale} min="0.1" max="2" step="0.01" />
-    <br />
-    <input type="range" bind:value={X} min="-10" max="10" step="0.01" />
-    <br />
-    <input type="range" bind:value={Y} min="-10" max="10" step="0.01" />
-  </side>
+  <side>Боковая панель </side>
   <main bind:clientHeight={height} bind:clientWidth={width}>
     <Canvas {width} {height} bind:scale bind:X bind:Y {update} {init} />
   </main>
