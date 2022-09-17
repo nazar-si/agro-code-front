@@ -15,6 +15,7 @@
   import color from "$lib/color";
   import { modeStore } from "$lib/store";
   import { onDestroy, onMount } from "svelte";
+  import LayoutSwitch from "$lib/components/LayoutSwitch.svelte";
 
   let mode: "similiar" | "parameters" | "profi";
 
@@ -26,7 +27,7 @@
   let t = 0;
   let gval = 0;
   const update = (cx) => {
-    console.log(cx.inx(width))
+    console.log(cx.inx(width));
     // cx.stroke(dark ? 200 : 0, 50); // установить цвет линии / обводки "руками"
     // cx.strokeWeight(2); // задать ширину линии
     // cx.line(-2.5, 0, 2.5, 0);
@@ -93,6 +94,7 @@
 <button>По по параметрам производства</button> -->
 
 <div class="wrapper">
+  <LayoutSwitch />
   <side style:width="{sideWidth}px"><Side bind:dark /> </side>
   <main bind:clientHeight={height} bind:clientWidth={width}>
     <Canvas
