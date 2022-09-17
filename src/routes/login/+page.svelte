@@ -3,13 +3,17 @@
   import Input from "$lib/components/ui/Input.svelte";
   import Password from "$lib/components/ui/Password.svelte";
   import { At, Lock } from "tabler-icons-svelte";
+
+  let email = "";
+  let password = "";
+  let error = false;
 </script>
 
-<Form title="Вход">
-  <Input placeholder="Почта" label="Почта"
+<Form title="Вход" on:submit={(e) => e.preventDefault()}>
+  <Input placeholder="Почта" label="Почта" bind:value={email} {error}
     ><div slot="icon"><At size={20} /></div></Input
   >
-  <Password placeholder="Пароль" label="Пароль"
+  <Password placeholder="Пароль" label="Пароль" bind:value={password} {error}
     ><div slot="icon"><Lock size={20} /></div></Password
   >
   <button>Войти</button>

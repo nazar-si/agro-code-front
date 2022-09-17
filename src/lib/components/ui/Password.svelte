@@ -1,5 +1,4 @@
 <script lang="ts">
-  export let icon = undefined;
   export let label = "";
   export let description = "";
   export let value = "";
@@ -9,6 +8,7 @@
   export let my = 0;
   export let mb = 0;
   export let mt = 0;
+  export let error = false;
 </script>
 
 <div
@@ -16,6 +16,7 @@
   style:margin="{(my ? my : m) / 4}rem {(mx ? mx : m) / 4}rem"
   style:margin-bottom="{mb}rem"
   style:margin-top="{mt}rem"
+  class:error
 >
   <label for="input" class="label">
     <div class="title">{label}</div>
@@ -75,6 +76,25 @@
     }
     .description {
       @apply text-sm text-gray-500 gdark:text-gray-400;
+    }
+  }
+  .frame.error {
+    .label {
+      .title {
+        @apply text-rose-500;
+      }
+      .description {
+        @apply text-rose-500;
+      }
+    }
+    .input {
+      @apply border-rose-500;
+      input::placeholder {
+        @apply text-rose-500;
+      }
+      .icon {
+        @apply text-rose-500;
+      }
     }
   }
 </style>
