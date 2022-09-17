@@ -6,6 +6,12 @@
   let Y = 0;
   import Canvas from "$lib/components/canvas/Canvas.svelte";
   import color from "$lib/color";
+  import { modeStore } from '$lib/store'
+  import { onMount } from "svelte";
+
+  let mode: 'similiar' | 'parameters' | 'profi';
+  
+  modeStore.subscribe((value) => mode = value);
 
   const init = () => {
     // код, который исполняется при создании сетки
@@ -34,7 +40,23 @@
     // P.S. ширина линии влияет на размер точки cx.point
     cx.point(Math.round(cx.mx * 2) / 2, Math.round(cx.my * 2) / 2); // mx, my - координаты мыши в пространстве координат моей сетки
   };
+
+  onMount(() => {
+    if(mode == 'profi')
+      modeStore.set('similiar');
+  });
+
+  const getChanks = (scale, x, y) => {
+    
+  }
+  $: getChanks(scale, X, Y);
 </script>
+
+<h1>ПОИСК ПЕРСПЕКТИВНЫХ ЗЕМЕЛЬ</h1>
+<h2>ДЛЯ ВАШИХ ВИНОГРАДНИКОВ</h2>
+
+<button>По схожим полям</button>
+<button>По по параметрам производства</button>
 
 <div class="wrapper">
   <side
@@ -52,6 +74,9 @@
 </div>
 
 <style lang="postcss">
+  h1, h2{
+    text-align: center;
+  }
   .wrapper {
     display: flex;
     height: 100vh;
