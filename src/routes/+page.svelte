@@ -47,8 +47,6 @@
     // cx.strokeWeight(0.2, true); // true говорит о том, что ширина линии будет задаваться в координатах сетки и зависит от приближения
     // // P.S. ширина линии влияет на размер точки cx.point
     // cx.point(Math.round(cx.mx * 2) / 2, Math.round(cx.my * 2) / 2); // mx, my - координаты мыши в пространстве координат моей сетки
-    cx.stroke(color.accent + "88");
-    cx.strokeWeight(2);
     t += 0.01;
     for (let y = -15; y <= 15; y++) {
       for (let x = -15; x <= 15; x++) {
@@ -62,7 +60,15 @@
         );
         val = Math.floor(Math.min(1, Math.max(0, val)) * 256);
         cx.fill(52, 211, 153, val);
-        cx.rect(0.15 + x, 0.15 + y, 0.7, 0.7, 0.1);
+        cx.strokeWeight(2);
+        cx.stroke(color.accent + "88");
+        let d = 0;
+        if (cx.mx > x && cx.mx < x + 1 && cx.my > y && cx.my < y + 1) {
+          cx.strokeWeight(3);
+          cx.stroke(color.accent);
+          d = 0.1;
+        }
+        cx.rect(0.15 + x - d, 0.15 + y - d, 0.7 + d * 2, 0.7 + d * 2, 0.1);
       }
     }
   };
