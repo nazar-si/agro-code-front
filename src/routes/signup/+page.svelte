@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import Form from "$lib/components/Form.svelte";
   import Input from "$lib/components/ui/Input.svelte";
   import Password from "$lib/components/ui/Password.svelte";
@@ -8,9 +8,16 @@
   let password = "";
   let password_repeat = "";
   let error = false;
+
+  import { registerAPI } from "$lib/client";
 </script>
 
-<Form title="Регистрация" on:submit={(e) => e.preventDefault()}>
+<Form
+  title="Регистрация"
+  on:submit={(e) => {
+    registerAPI(email, password);
+  }}
+>
   <Input placeholder="Почта" label="Почта" bind:value={email} {error}
     ><div slot="icon"><At size={20} /></div></Input
   >
