@@ -216,6 +216,9 @@
       endShape(...args) {
         p5.endShape(...args);
       }
+      noise(...args) {
+        return p5.noise(...args);
+      }
     }
     p5.setup = () => {
       p5.createCanvas(width, height);

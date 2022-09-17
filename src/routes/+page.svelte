@@ -23,29 +23,48 @@
   const init = () => {
     // код, который исполняется при создании сетки
   };
+  let t = 0;
   const update = (cx) => {
-    cx.stroke(dark ? 200 : 0, 50); // установить цвет линии / обводки "руками"
-    cx.strokeWeight(2); // задать ширину линии
-    cx.line(-2.5, 0, 2.5, 0);
-    cx.line(-2.5, 1, 2.5, 1);
-    cx.line(-2.5, 2, 2.5, 2);
-    cx.line(-2.5, -1, 2.5, -1);
-    cx.line(-2.5, -2, 2.5, -2);
-    cx.line(0, -2.5, 0, 2.5);
-    cx.line(1, -2.5, 1, 2.5);
-    cx.line(2, -2.5, 2, 2.5);
-    cx.line(-1, -2.5, -1, 2.5);
-    cx.line(-2, -2.5, -2, 2.5);
-    cx.stroke(color.dark); // цвет линии / обводки из моей библиотеки
-    cx.rect(0.2, 0.2, 0.6, 0.6, 0.1);
-    cx.stroke(color.primary);
-    cx.fill(color.transparent); // цвет заливки (аналогично обводке)
-    cx.rect(0.2 - 2, 0.2 - 1, 0.6, 0.6, 0.1, 0.3, 0.3, 0.1);
-    cx.stroke(color.blue);
-    cx.ellipse(0.5 + 1, 0.5 - 2, 0.6, 0.6);
-    cx.strokeWeight(0.2, true); // true говорит о том, что ширина линии будет задаваться в координатах сетки и зависит от приближения
-    // P.S. ширина линии влияет на размер точки cx.point
-    cx.point(Math.round(cx.mx * 2) / 2, Math.round(cx.my * 2) / 2); // mx, my - координаты мыши в пространстве координат моей сетки
+    // cx.stroke(dark ? 200 : 0, 50); // установить цвет линии / обводки "руками"
+    // cx.strokeWeight(2); // задать ширину линии
+    // cx.line(-2.5, 0, 2.5, 0);
+    // cx.line(-2.5, 1, 2.5, 1);
+    // cx.line(-2.5, 2, 2.5, 2);
+    // cx.line(-2.5, -1, 2.5, -1);
+    // cx.line(-2.5, -2, 2.5, -2);
+    // cx.line(0, -2.5, 0, 2.5);
+    // cx.line(1, -2.5, 1, 2.5);
+    // cx.line(2, -2.5, 2, 2.5);
+    // cx.line(-1, -2.5, -1, 2.5);
+    // cx.line(-2, -2.5, -2, 2.5);
+    // cx.stroke(color.dark); // цвет линии / обводки из моей библиотеки
+    // cx.rect(0.2, 0.2, 0.6, 0.6, 0.1);
+    // cx.stroke(color.primary);
+    // cx.fill(color.transparent); // цвет заливки (аналогично обводке)
+    // cx.rect(0.2 - 2, 0.2 - 1, 0.6, 0.6, 0.1, 0.3, 0.3, 0.1);
+    // cx.stroke(color.blue);
+    // cx.ellipse(0.5 + 1, 0.5 - 2, 0.6, 0.6);
+    // cx.strokeWeight(0.2, true); // true говорит о том, что ширина линии будет задаваться в координатах сетки и зависит от приближения
+    // // P.S. ширина линии влияет на размер точки cx.point
+    // cx.point(Math.round(cx.mx * 2) / 2, Math.round(cx.my * 2) / 2); // mx, my - координаты мыши в пространстве координат моей сетки
+    cx.stroke(color.accent + "88");
+    cx.strokeWeight(2);
+    t += 0.01;
+    for (let y = -15; y <= 15; y++) {
+      for (let x = -15; x <= 15; x++) {
+        let val = Math.abs(
+          Math.sin(x / 3 + 1 + t / 2) * Math.cos(y / 4 + 3 + t) +
+            (Math.sin(x / 9 - 1 + t / 4) * Math.cos(y / 7 + 1 + t / 3)) / 2 +
+            (Math.sin(x / 18 + 0.5 - t / 8) * Math.cos(y / 20 + 1 + t / 8)) /
+              2 +
+            cx.noise(x / 5 + 100, y / 5 + 100, t) ** 2 +
+            cx.noise(x * 2 + 20, y * 2 + 20, t * 2) / 3
+        );
+        val = Math.floor(Math.min(1, Math.max(0, val)) * 256);
+        cx.fill(52, 211, 153, val);
+        cx.rect(0.15 + x, 0.15 + y, 0.7, 0.7, 0.1);
+      }
+    }
   };
 
   onMount(() => {
@@ -67,17 +86,7 @@
 <div class="wrapper">
   <side style:width="{sideWidth}px"><Side bind:dark /> </side>
   <main bind:clientHeight={height} bind:clientWidth={width}>
-    <Canvas
-      {width}
-      {height}
-      bind:scale
-      bind:X
-      bind:Y
-      {update}
-      {init}
-      hideGrid
-      {dark}
-    />
+    <Canvas {width} {height} bind:scale bind:X bind:Y {update} {init} {dark} />
   </main>
 </div>
 
