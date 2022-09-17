@@ -3,7 +3,8 @@
   let height;
   let windowHeight;
   let windowWidth;
-  $: width = windowWidth - 300;
+  let sideWidth = 400;
+  $: width = windowWidth - sideWidth;
   $: height = windowHeight;
   let dark = false;
   let scale = 1;
@@ -64,7 +65,7 @@
 <button>По по параметрам производства</button> -->
 
 <div class="wrapper">
-  <side><Side bind:dark /> </side>
+  <side style:width="{sideWidth}px"><Side bind:dark /> </side>
   <main bind:clientHeight={height} bind:clientWidth={width}>
     <Canvas
       {width}
@@ -91,7 +92,6 @@
     overflow: hidden;
     side {
       z-index: 1;
-      width: 300px;
       height: 100%;
       @apply bg-gray-100 border-r-1 border-gray-200 shadow-main-sm;
       @apply gdark:bg-gray-750 gdark:shadow-main-lg gdark:border-gray-700;

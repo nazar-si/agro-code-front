@@ -4,7 +4,7 @@
   import Input from "./ui/Input.svelte";
   import Divider from "./ui/Divider.svelte";
   import { Moon, Sun } from "tabler-icons-svelte";
-  import Select from "svelte-select";
+  import color from "$lib/color";
   export let dark = false;
   let vines = [
     { label: "Совиньон", value: 0 },
@@ -19,6 +19,13 @@
     { label: "Мускат", value: 9 },
     { label: "Совиньон Блан", value: 10 },
   ];
+  let sugar = [
+    { label: "Сухое", value: 0 },
+    { label: "Полусухое", value: 1 },
+    { label: "Полусладкое", value: 2 },
+    { label: "Сладкое", value: 3 },
+  ];
+  import Select from "./ui/Select.svelte";
 </script>
 
 <div class="wrapper">
@@ -43,21 +50,33 @@
     label="Направление"
     check
   />
-  <div
-    class="multiselect"
-    style:--border={dark ? "1px solid #333" : "1px solid #aaa"}
-    style:--background={dark ? "#18181c" : "#fff"}
-  >
-    <label for="vines">Сорта винограда</label>
-    <Select id="vines" items={vines} placeholder="Сорта винограда..." isMulti />
-  </div>
+  <Multiple
+    type="text"
+    components={["Белое", "Красное"]}
+    label="Цвет вина"
+    check
+  />
+  <Select
+    label="Содержание сахара"
+    placeholder="Содержание сахара..."
+    items={sugar}
+    {dark}
+    isMulti
+  />
+  <Select
+    label="Сорта винограда"
+    placeholder="Сорта винограда..."
+    items={vines}
+    {dark}
+    isMulti
+  />
 </div>
 
 <style lang="postcss">
   .wrapper {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
     @apply p-2;
     .row {
       @apply flex items-center;
@@ -67,17 +86,10 @@
       width: 100%;
       text-align: center;
       @apply pr-8;
-      @apply my-3 text-lg;
+      @apply my-2 text-lg;
     }
     .theme {
       @apply w-8 h-8 flex items-center justify-center border-1 border-gray-300 rounded-md gdark:border-gray-600;
-    }
-    .multiselect {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      @apply text-gray-700 gdark:text-gray-300;
-      --borderRadius: 0.5rem;
     }
   }
 </style>
