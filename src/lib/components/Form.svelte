@@ -1,5 +1,6 @@
 <script>
   export let title = "Форма";
+  export let action = "";
 </script>
 
 <div class="wrapper">
@@ -9,7 +10,7 @@
   </form>
 </div>
 
-<style lang="postcss">
+<style lang="postcss" action="">
   .wrapper {
     width: 100%;
     height: 100vh;

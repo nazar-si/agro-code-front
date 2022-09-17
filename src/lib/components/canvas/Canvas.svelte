@@ -14,7 +14,7 @@
   export let scale;
   export let update;
   export let init = () => {};
-  let scaleBuff = 1 / 2 ** 7;
+  let scaleBuff = 1 / 2 ** 3;
   let minScale = 1 / 2 ** 7.2;
   let maxScale = 1;
 

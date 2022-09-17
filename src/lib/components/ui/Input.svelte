@@ -9,6 +9,8 @@
   export let mb = 0;
   export let mt = 0;
   export let error = false;
+  import cuid from "cuid";
+  let c = cuid();
 </script>
 
 <div
@@ -18,16 +20,17 @@
   style:margin-top="{mt}rem"
   class:error
 >
-  <label for="input" class="label">
+  <label for="input-{c}" class="label">
     <div class="title">{label}</div>
     <div class="description">{description}</div>
   </label>
-  <label for="input" class="input">
+  <label for="input-{c}" class="input">
     {#if $$slots.icon}
       <div class="icon"><slot name="icon" /></div>
     {/if}
     <input
-      id="input"
+      autocomplete="username"
+      id="input-{c}"
       type="text"
       {placeholder}
       on:click

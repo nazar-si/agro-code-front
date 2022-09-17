@@ -16,7 +16,12 @@ export const loginAPI = (login: string, password: string) => {
     .then((json: any) => {
         console.log(json)
         localStorage.setItem('token', json.token)
+        return {
+            headers: {Location: "/"},
+            status: 302
+        }
     })
+    
 }
 
 export const registerAPI = (login: string, password: string) => {
