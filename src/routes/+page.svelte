@@ -24,6 +24,7 @@
     // код, который исполняется при создании сетки
   };
   let t = 0;
+  let gval = 0;
   const update = (cx) => {
     // cx.stroke(dark ? 200 : 0, 50); // установить цвет линии / обводки "руками"
     // cx.strokeWeight(2); // задать ширину линии
@@ -67,6 +68,7 @@
           cx.strokeWeight(3);
           cx.stroke(color.accent);
           d = 0.1;
+          gval = Math.floor((val / 256) * 100);
         }
         cx.rect(0.15 + x - d, 0.15 + y - d, 0.7 + d * 2, 0.7 + d * 2, 0.1);
       }
@@ -92,7 +94,17 @@
 <div class="wrapper">
   <side style:width="{sideWidth}px"><Side bind:dark /> </side>
   <main bind:clientHeight={height} bind:clientWidth={width}>
-    <Canvas {width} {height} bind:scale bind:X bind:Y {update} {init} {dark} />
+    <Canvas
+      {width}
+      {height}
+      bind:scale
+      bind:X
+      bind:Y
+      {update}
+      {init}
+      {dark}
+      {gval}
+    />
   </main>
 </div>
 

@@ -5,6 +5,8 @@
   import Divider from "./ui/Divider.svelte";
   import { Moon, Sun } from "tabler-icons-svelte";
   import color from "$lib/color";
+  import { selectedCoord, selectedVal } from "$lib/stores/grid";
+  $: console.log($selectedCoord);
   export let dark = false;
   let vines = [
     { label: "Совиньон", value: 0 },
@@ -70,6 +72,16 @@
     {dark}
     isMulti
   />
+  {#if $selectedCoord[0] !== null}
+    <Divider align="left" mt={4}>Данные выбранной ячеки</Divider>
+    <span>
+      Положение:
+      <span class="text-primary">{$selectedCoord[0]},{$selectedCoord[1]}</span>
+      <br />
+      <span />Индекс соответствия:
+      <span class="text-primary">{$selectedVal}</span></span
+    >
+  {/if}
 </div>
 
 <style lang="postcss">

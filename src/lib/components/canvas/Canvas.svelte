@@ -1,10 +1,11 @@
 <script>
   import P5 from "p5-svelte";
-  import { Line } from "tabler-icons-svelte";
+  import { Line, Maximize } from "tabler-icons-svelte";
   export let width;
   export let height;
   export let hideGrid = false;
   export let dark = false;
+  export let gval = 0;
   let gridSize = 32;
   let visualGrid = gridSize;
   let gridResizeFactor = 4;
@@ -24,6 +25,8 @@
   let startMouseX = 0;
   let startMouseY = 0;
   //-----------
+
+  import { selectedCoord, selectedVal } from "$lib/stores/grid";
 
   const sketch = (p5) => {
     class cx {
@@ -282,6 +285,14 @@
         startMouseX = c.mouseX;
         startMouseY = c.mouseY;
         startDrag = true;
+      }
+    };
+    p5.mouseClicked = (e) => {
+      if (c.mx > -15 && c.mx <= 16 && c.my > -15 && c.my <= 16) {
+        $selectedCoord = [Math.floor(c.mx), Math.floor(c.my)];
+        $selectedVal = gval;
+      } else {
+        $selectedCoord = [null, null];
       }
     };
     p5.mouseReleased = (e) => {
