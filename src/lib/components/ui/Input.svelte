@@ -12,8 +12,8 @@
     <div class="description">{description}</div>
   </label>
   <label for="input" class="input">
-    {#if icon}
-      <div class="icon"><svelte:component this={icon} size={20} /></div>
+    {#if $$slots.icon}
+      <div class="icon"><slot name="icon" /></div>
     {/if}
     <input
       id="input"

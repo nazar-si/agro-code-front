@@ -12,6 +12,17 @@
   export let scale;
   export let update;
   export let init = () => {};
+  let scaleBuff = 1;
+  let minScale = 1 / 2 ** 5;
+
+  // mouse drag
+  let startScale = 1;
+  let startX = 0;
+  let startY = 0;
+  let startDrag = false;
+  let startMouseX = 0;
+  let startMouseY = 0;
+  //-----------
 
   const sketch = (p5) => {
     class cx {
@@ -213,6 +224,19 @@
     p5.draw = () => {
       p5.background(250);
       p5.translate(p5.width / 2, p5.height / 2);
+
+      scale = scale + (scaleBuff - scale) * 0.2;
+      c.mouseX = p5.mouseX;
+      c.mouseY = p5.mouseY;
+      c.mx = c.inx(p5.mouseX - p5.width / 2);
+      c.my = c.iny(p5.mouseY - p5.height / 2);
+      if (startDrag) {
+        let x = c.in(c.mouseX - startMouseX);
+        let y = c.in(c.mouseY - startMouseY);
+        X = startX - x;
+        Y = startY - y;
+      }
+
       if (!hideGrid) {
         visualGrid =
           Math.max(
@@ -238,13 +262,32 @@
           c.line(lx, (i + dy) * rel, rx, (i + dy) * rel);
         }
       }
-      c.mouseX = p5.mouseX;
-      c.mouseY = p5.mouseY;
-      c.mx = c.inx(p5.mouseX - p5.width / 2);
-      c.my = c.iny(p5.mouseY - p5.height / 2);
+
       update(c);
+    };
+    p5.mouseWheel = (e) => {
+      let wheel = Math.max(Math.min(e.wheelDeltaY, 1), -1);
+      scaleBuff *= 2 ** (wheel / 2);
+      scaleBuff = Math.max(Math.min(4, scaleBuff), minScale);
+    };
+    p5.mousePressed = (e) => {
+      if (e.button == 2) {
+        startScale = scale;
+        startX = X;
+        startY = Y;
+        startMouseX = c.mouseX;
+        startMouseY = c.mouseY;
+        startDrag = true;
+      }
+    };
+    p5.mouseReleased = (e) => {
+      if (e.button == 2) {
+        startDrag = false;
+      }
     };
   };
 </script>
 
-<P5 {sketch} />
+<div on:contextmenu={(e) => e.preventDefault()}>
+  <P5 {sketch} />
+</div>
