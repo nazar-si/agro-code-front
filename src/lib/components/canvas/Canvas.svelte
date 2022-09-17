@@ -50,6 +50,7 @@
         this.mouseY = 0;
         this.mx = 0;
         this.my = 0;
+        this.mouseOutside = false;
       }
       stroke(...args) {
         p5.stroke(...args);
@@ -270,15 +271,18 @@
           c.line(lx, (i + dy) * rel, rx, (i + dy) * rel);
         }
       }
-
+      c.mouseOutside =
+        c.mouseX < 0 || c.mouseX > width || c.mouseY < 0 || c.mouseY > height;
       update(c);
     };
     p5.mouseWheel = (e) => {
+      if (c.mouseOutside) return;
       let wheel = Math.max(Math.min(e.wheelDeltaY, 1), -1);
       scaleBuff *= 2 ** (wheel / 2);
       scaleBuff = Math.max(Math.min(maxScale, scaleBuff), minScale);
     };
     p5.mousePressed = (e) => {
+      if (c.mouseOutside) return;
       if (e.button == 2) {
         startScale = scale;
         startX = X;
@@ -289,6 +293,7 @@
       }
     };
     p5.mouseClicked = (e) => {
+      if (c.mouseOutside) return;
       if (c.mx > -15 && c.mx <= 16 && c.my > -15 && c.my <= 16) {
         $selectedCoord = [Math.floor(c.mx), Math.floor(c.my)];
         $selectedVal = gval;

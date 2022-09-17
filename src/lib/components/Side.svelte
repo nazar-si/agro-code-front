@@ -6,7 +6,6 @@
   import { Moon, Sun } from "tabler-icons-svelte";
   import color from "$lib/color";
   import { selectedCoord, selectedVal } from "$lib/stores/grid";
-  $: console.log($selectedCoord);
   export let dark = false;
   let vines = [
     { label: "Совиньон", value: 0 },
