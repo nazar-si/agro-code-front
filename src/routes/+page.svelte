@@ -1,17 +1,22 @@
 <script lang="ts">
   let width;
   let height;
+  let windowHeight;
+  let windowWidth;
+  $: width = windowWidth - 300;
+  $: height = windowHeight;
+
   let scale = 1;
   let X = 0;
   let Y = 0;
   import Canvas from "$lib/components/canvas/Canvas.svelte";
   import color from "$lib/color";
-  import { modeStore } from '$lib/store'
-  import { onMount } from "svelte";
+  import { modeStore } from "$lib/store";
+  import { onDestroy, onMount } from "svelte";
 
-  let mode: 'similiar' | 'parameters' | 'profi';
-  
-  modeStore.subscribe((value) => mode = value);
+  let mode: "similiar" | "parameters" | "profi";
+
+  modeStore.subscribe((value) => (mode = value));
 
   const init = () => {
     // код, который исполняется при создании сетки
@@ -42,21 +47,19 @@
   };
 
   onMount(() => {
-    if(mode == 'profi')
-      modeStore.set('similiar');
+    if (mode == "profi") modeStore.set("similiar");
   });
-
-  const getChanks = (scale, x, y) => {
-    
-  }
+  const getChanks = (scale, x, y) => {};
   $: getChanks(scale, X, Y);
 </script>
 
-<h1>ПОИСК ПЕРСПЕКТИВНЫХ ЗЕМЕЛЬ</h1>
+<svelte:window bind:innerWidth={windowWidth} bind:innerHeight={windowHeight} />
+
+<!-- <h1>ПОИСК ПЕРСПЕКТИВНЫХ ЗЕМЕЛЬ</h1>
 <h2>ДЛЯ ВАШИХ ВИНОГРАДНИКОВ</h2>
 
 <button>По схожим полям</button>
-<button>По по параметрам производства</button>
+<button>По по параметрам производства</button> -->
 
 <div class="wrapper">
   <side>Боковая панель </side>
@@ -66,7 +69,8 @@
 </div>
 
 <style lang="postcss">
-  h1, h2{
+  h1,
+  h2 {
     text-align: center;
   }
   .wrapper {

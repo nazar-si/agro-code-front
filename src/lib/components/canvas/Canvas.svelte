@@ -285,6 +285,9 @@
         startDrag = false;
       }
     };
+    p5.windowResized = (e) => {
+      p5.resizeCanvas(width, height);
+    };
   };
 </script>
 
