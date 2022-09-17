@@ -27,7 +27,7 @@
     {/if}
     <input
       id="input"
-      type="text"
+      type="password"
       {placeholder}
       on:click
       on:change

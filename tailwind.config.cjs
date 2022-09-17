@@ -64,6 +64,15 @@ module.exports = {
           905: "var(--primary-905)",
           DEFAULT: "var(--primary-500)",
         },
+        accent: {
+          405: "#5ddcad88",
+          500: "#34d399",
+          505: "#34d39988",
+          502: "#34d39933",
+          600: "#2aa97a",
+          605: "#2aa97a88",
+          602: "#2aa97a33",
+        },
         gray: {
           50: "#fafafa",
           100: "#f4f4f5",
