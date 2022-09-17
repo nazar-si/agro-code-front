@@ -55,6 +55,7 @@
   .wrapper {
     display: flex;
     height: 100vh;
+    overflow: hidden;
     side {
       width: 300px;
       height: 100%;
