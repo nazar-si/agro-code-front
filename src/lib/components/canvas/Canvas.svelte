@@ -14,8 +14,9 @@
   export let scale;
   export let update;
   export let init = () => {};
-  let scaleBuff = 1;
-  let minScale = 1 / 2 ** 5;
+  let scaleBuff = 1 / 2 ** 7;
+  let minScale = 1 / 2 ** 7.2;
+  let maxScale = 1;
 
   // mouse drag
   let startScale = 1;
@@ -275,7 +276,7 @@
     p5.mouseWheel = (e) => {
       let wheel = Math.max(Math.min(e.wheelDeltaY, 1), -1);
       scaleBuff *= 2 ** (wheel / 2);
-      scaleBuff = Math.max(Math.min(4, scaleBuff), minScale);
+      scaleBuff = Math.max(Math.min(maxScale, scaleBuff), minScale);
     };
     p5.mousePressed = (e) => {
       if (e.button == 2) {

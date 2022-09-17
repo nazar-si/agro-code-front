@@ -76,3 +76,22 @@ export const setUserVinoyardsAPI = (vinoyards: []) => {
     }
 }
 
+type cord = {x: number, y: number}
+
+export const getMapAPI = (scale: 32 | 8 | 1, corners: cord[], pixels: cord[]) => {
+    fetch(host + '/getMap', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify({
+            scale: scale,
+            corners: corners,
+            pixels: pixels
+        })
+    })
+    .then((response) => response.json())
+    .then((json: any) => {
+        console.log(json)
+    })
+}

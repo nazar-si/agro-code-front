@@ -26,6 +26,7 @@
   let t = 0;
   let gval = 0;
   const update = (cx) => {
+    console.log(cx.inx(width))
     // cx.stroke(dark ? 200 : 0, 50); // установить цвет линии / обводки "руками"
     // cx.strokeWeight(2); // задать ширину линии
     // cx.line(-2.5, 0, 2.5, 0);
