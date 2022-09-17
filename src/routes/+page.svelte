@@ -5,11 +5,12 @@
   let windowWidth;
   $: width = windowWidth - 300;
   $: height = windowHeight;
-
+  let dark = false;
   let scale = 1;
   let X = 0;
   let Y = 0;
   import Canvas from "$lib/components/canvas/Canvas.svelte";
+  import Side from "$lib/components/Side.svelte";
   import color from "$lib/color";
   import { modeStore } from "$lib/store";
   import { onDestroy, onMount } from "svelte";
@@ -22,7 +23,7 @@
     // код, который исполняется при создании сетки
   };
   const update = (cx) => {
-    cx.stroke(0, 0, 0, 50); // установить цвет линии / обводки "руками"
+    cx.stroke(dark ? 200 : 0, 50); // установить цвет линии / обводки "руками"
     cx.strokeWeight(2); // задать ширину линии
     cx.line(-2.5, 0, 2.5, 0);
     cx.line(-2.5, 1, 2.5, 1);
@@ -48,6 +49,7 @@
 
   onMount(() => {
     if (mode == "profi") modeStore.set("similiar");
+    dark = document.body.classList.contains("dark");
   });
   const getChanks = (scale, x, y) => {};
   $: getChanks(scale, X, Y);
@@ -62,9 +64,19 @@
 <button>По по параметрам производства</button> -->
 
 <div class="wrapper">
-  <side>Боковая панель </side>
+  <side><Side bind:dark /> </side>
   <main bind:clientHeight={height} bind:clientWidth={width}>
-    <Canvas {width} {height} bind:scale bind:X bind:Y {update} {init} />
+    <Canvas
+      {width}
+      {height}
+      bind:scale
+      bind:X
+      bind:Y
+      {update}
+      {init}
+      hideGrid
+      {dark}
+    />
   </main>
 </div>
 
@@ -78,9 +90,11 @@
     height: 100vh;
     overflow: hidden;
     side {
+      z-index: 1;
       width: 300px;
       height: 100%;
-      @apply bg-gray-100 border-r-1 border-gray-300;
+      @apply bg-gray-100 border-r-1 border-gray-200 shadow-main-sm;
+      @apply gdark:bg-gray-750 gdark:shadow-main-lg gdark:border-gray-700;
     }
     main {
       flex: 1;

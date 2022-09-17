@@ -4,6 +4,7 @@
   export let width;
   export let height;
   export let hideGrid = false;
+  export let dark = false;
   let gridSize = 32;
   let visualGrid = gridSize;
   let gridResizeFactor = 4;
@@ -222,7 +223,7 @@
     };
     let c = new cx();
     p5.draw = () => {
-      p5.background(250);
+      dark ? p5.background(24, 24, 28) : p5.background(250);
       p5.translate(p5.width / 2, p5.height / 2);
 
       scale = scale + (scaleBuff - scale) * 0.2;
@@ -253,7 +254,7 @@
         let dy = Math.floor(Y / rel);
         let lx = c.inx(-p5.width / 2);
         let rx = c.inx(p5.width / 2);
-        p5.stroke(0, 10);
+        p5.stroke(dark ? 255 : 0, 10);
         p5.strokeWeight(2);
         for (let i = Math.ceil(-sw / 2); i < sw / 2 + 1; i++) {
           c.line((i + dx) * rel, ty, (i + dx) * rel, by);
@@ -291,6 +292,9 @@
   };
 </script>
 
-<div on:contextmenu={(e) => e.preventDefault()}>
+<div
+  on:contextmenu={(e) => e.preventDefault()}
+  on:wheel={(e) => e.preventDefault()}
+>
   <P5 {sketch} />
 </div>
