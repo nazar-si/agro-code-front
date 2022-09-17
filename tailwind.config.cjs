@@ -11,9 +11,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["IBM Plex Sans", "sans-serif"],
+        sans: ["Manrope", "sans-serif"],
         display: ["Source Serif Pro", "Georgia", "serif"],
-        body: ["Synonym", "system-ui", "sans-serif"],
+        body: ["Anonymous Pro", "system-ui", "sans-serif"],
       },
       colors: {
         transparent: "#0000",
