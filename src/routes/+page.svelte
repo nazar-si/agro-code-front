@@ -47,7 +47,7 @@
     <input type="range" bind:value={Y} min="-10" max="10" step="0.01" />
   </side>
   <main bind:clientHeight={height} bind:clientWidth={width}>
-    <Canvas {width} {height} {scale} {X} {Y} {update} {init} />
+    <Canvas {width} {height} bind:scale bind:X bind:Y {update} {init} />
   </main>
 </div>
 
