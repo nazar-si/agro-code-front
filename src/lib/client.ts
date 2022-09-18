@@ -1,3 +1,5 @@
+import { mapParametersStore, mapStore } from "./store"
+
 export const ssr = false;
 const host = 'http://79.120.76.23:6969'
 
@@ -84,6 +86,15 @@ export const setUserVinoyardsAPI = (vinoyards: []) => {
 type cord = {x: number, y: number}
 
 export const getMapAPI = (scale: 32 | 8 | 1, corners: cord[], pixels: cord[]) => {
+    if(corners[0].x < 0)
+        corners[0].x = 0;
+    if(corners[0].y < 0)
+        corners[0].y = 0;
+    if(corners[0].x > 4095)
+        corners[0].x = 4095;
+    if(corners[0].y > 4095)
+        corners[0].y = 4095;
+    
     fetch(host + '/getMap', {
         method: 'POST',
         headers: {
@@ -97,6 +108,8 @@ export const getMapAPI = (scale: 32 | 8 | 1, corners: cord[], pixels: cord[]) =>
     })
     .then((response) => response.json())
     .then((json: any) => {
-        console.log(json)
+        // console.log(json)
+        mapStore.set(json.data)
+        mapParametersStore.set(json.params)
     })
 }

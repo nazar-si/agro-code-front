@@ -20,8 +20,8 @@
 
   // mouse drag
   let startScale = 1;
-  let startX = 0;
-  let startY = 0;
+  let startX = 2048;
+  let startY = 2048;
   let startDrag = false;
   let startMouseX = 0;
   let startMouseY = 0;
