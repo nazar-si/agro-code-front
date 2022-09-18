@@ -1,14 +1,16 @@
 <script>
-  import { Alien, Cpu2 } from "tabler-icons-svelte";
+  import { Building, WaveSquare } from "tabler-icons-svelte";
   export let value = 1;
+  export let isBuilding = true;
+  export let isDigits = false;
 </script>
 
 <div class="wrapper">
-  <button class:selected={value == 1} on:click={() => (value = 1)}
-    ><Alien /></button
+  <button class:selected={isBuilding} on:click={() => (isBuilding = !isBuilding)}
+    ><Building /></button
   >
-  <button class:selected={value == 2} on:click={() => (value = 2)}
-    ><Cpu2 /></button
+  <button class:selected={isDigits} on:click={() => (isDigits = !isDigits)}
+    ><WaveSquare /></button
   >
 </div>
 
