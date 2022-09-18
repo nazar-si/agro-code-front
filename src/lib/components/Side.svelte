@@ -4,9 +4,14 @@
   import Input from "./ui/Input.svelte";
   import Divider from "./ui/Divider.svelte";
   import { Moon, Sun } from "tabler-icons-svelte";
+  import { modeStore } from "$lib/store";
   import color from "$lib/color";
   import { selectedCoord, selectedVal } from "$lib/stores/grid";
   export let dark = false;
+
+  let mode = "similiar";
+  modeStore.subscribe((value) => (mode = value));
+
   let vines = [
     { label: "Совиньон", value: 0 },
     { label: "Каберне Фран", value: 1 },
@@ -46,45 +51,64 @@
   </div>
   <Divider align="left">Какая-то секция</Divider>
   <div class="row buttons">
-    <button class="norm">Выбор по схожим полям</button>
-    <button class="norm">Выбор по параметрам</button>
+    <button
+      class="norm"
+      on:click={() => {
+        modeStore.set("similiar");
+      }}>Выбор по схожим полям</button
+    >
+    <button
+      class="norm"
+      on:click={() => {
+        modeStore.set("parameters");
+      }}>Выбор по параметрам</button
+    >
   </div>
   <Divider align="left">Основные параметры</Divider>
-  <Multiple
-    type="text"
-    components={["Юг", "Север"]}
-    label="Направление"
-    check
-  />
-  <Multiple
-    type="text"
-    components={["Белое", "Красное"]}
-    label="Цвет вина"
-    check
-  />
-  <Select
-    label="Содержание сахара"
-    placeholder="Содержание сахара..."
-    items={sugar}
-    {dark}
-    isMulti
-  />
-  <Select
-    label="Сорта винограда"
-    placeholder="Сорта винограда..."
-    items={vines}
-    {dark}
-    isMulti
-  />
-  {#if $selectedCoord[0] !== null}
-    <Divider align="left" mt={4}>Данные выбранной ячеки</Divider>
-    <span>
-      Положение:
-      <span class="text-primary">{$selectedCoord.toString()}</span>
-      <br />
-      <span />Индекс соответствия:
-      <span class="text-primary">{$selectedVal}</span></span
-    >
+  {#if mode == "parameters"}
+    <div class="params">
+      <Multiple
+        type="text"
+        components={["Юг", "Север"]}
+        label="Направление"
+        check
+      />
+      <Multiple
+        type="text"
+        components={["Белое", "Красное"]}
+        label="Цвет вина"
+        check
+      />
+      <Select
+        label="Содержание сахара"
+        placeholder="Содержание сахара..."
+        items={sugar}
+        {dark}
+        isMulti
+      />
+      <Select
+        label="Сорта винограда"
+        placeholder="Сорта винограда..."
+        items={vines}
+        {dark}
+        isMulti
+      />
+      {#if $selectedCoord[0] !== null}
+        <Divider align="left" mt={4}>Данные выбранной ячеки</Divider>
+        <span>
+          Положение:
+          <span class="text-primary"
+            >{$selectedCoord[0]},{$selectedCoord[1]}</span
+          >
+          <br />
+          <span />Индекс соответствия:
+          <span class="text-primary">{$selectedVal}</span></span
+        >
+      {/if}
+    </div>
+  {/if}
+  {#if mode == "similiar"}
+    Выберете несколько существующих полей
   {/if}
 </div>
 
