@@ -87,28 +87,25 @@
     // }
     cxwidth = cx.inx(width);
     cxheight = cx.inx(height);
-    // console.log(map.length)
     if(map && map.length != 0 && mapParams){
       for(let i = 0; i < map.length; i++){
         for(let j = 0; j < map[i].length; j++){
           cx.fill(color.black);
-          if(map[i][j] == -1){
+          if(map[i][j] == -1)
             continue;
-          }
-          else if(map[i][j] == -2){
+          if(map[i][j] == -2){
             cx.fill(color.dark)
           }
           else if(map[i][j] == 2){
             cx.fill(color.accent)
           }
-          else if(0.1 <= map[i][j] && map[i][j] <= 1){
+          else if(0 <= map[i][j] && map[i][j] <= 1){
             cx.fill('#00' + (Math.round(255 - 255*map[i][j])).toString(16) + '00')
-            // cx.fill(color.green)
           }
           cx.rect(mapParams.top_left_coords.x + i*roundedScale, 
-                  mapParams.top_left_coords.y + j*roundedScale, 
-                  mapParams.top_left_coords.x + (i + 1)*roundedScale, 
-                  mapParams.top_left_coords.y + (j + 1)*roundedScale)
+            mapParams.top_left_coords.y + j*roundedScale, 
+            roundedScale, 
+            roundedScale)
         }
       }
     }
@@ -120,7 +117,6 @@
     time = new Date();
   });
   const getChanks = (scale, x, y) => {
-    console.log(map, mapParams);
     if((new Date()).getTime() - 2000 > time.getTime()){
       if(Math.abs(32 - scale*32) < Math.abs(8 - scale*32)){
         roundedScale = 1;
