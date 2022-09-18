@@ -45,8 +45,10 @@
     <h3>Agro code</h3>
   </div>
   <Divider align="left">Какая-то секция</Divider>
-  <button class="norm">Выбор по схожим полям</button>
-  <button class="norm">Выбор по параметрам</button>
+  <div class="row buttons">
+    <button class="norm">Выбор по схожим полям</button>
+    <button class="norm">Выбор по параметрам</button>
+  </div>
   <Divider align="left">Основные параметры</Divider>
   <Multiple
     type="text"
@@ -94,6 +96,9 @@
     @apply p-2;
     .row {
       @apply flex items-center;
+      &.buttons {
+        gap: 1rem;
+      }
     }
     h3 {
       flex: 1;
@@ -107,9 +112,7 @@
     }
   }
   button.norm {
-    @apply bg-primary-500 text-gray-50 font-semibold text-base rounded-md p-1 my-2;
-    &:first-of-type {
-      @apply -mb-2;
-    }
+    @apply bg-primary-500 text-gray-50 font-semibold text-base rounded-md p-1 mt-1 mb-2 transition-all;
+    @apply hover:bg-primary-400 gdark:hover:bg-primary-600;
   }
 </style>

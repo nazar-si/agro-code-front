@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { getMapAPI } from '$lib/client';
+  import { getMapAPI } from "$lib/client";
   import Canvas from "$lib/components/canvas/Canvas.svelte";
   import Side from "$lib/components/Side.svelte";
   import color from "$lib/color";
   import { modeStore, mapStore, mapParametersStore } from "$lib/store";
   import { onDestroy, onMount } from "svelte";
   import LayoutSwitch from "$lib/components/LayoutSwitch.svelte";
-  import json from './test.json';
-    import { ArrowRightBar, Yoga } from 'tabler-icons-svelte';
+  import json from "./test.json";
+  import { ArrowRightBar, Yoga } from "tabler-icons-svelte";
 
   let width;
   let height;
@@ -17,20 +17,20 @@
   $: width = windowWidth - sideWidth;
   $: height = windowHeight;
   let dark = false;
-  let scale = 1;
+  let scale = 1 / 2 ** 4;
   let roundedScale: 1 | 8 | 32 = 1;
-  let X = 0;
-  let Y = 0;
+  let X = 2048;
+  let Y = 2048;
   let time = new Date();
   let cxwidth, cxheight;
-  
+
   let map = [];
   let mode: "similiar" | "parameters" | "profi";
-  let mapParams: {size: number, top_left_coords: {x: number, y: number}};
+  let mapParams: { size: number; top_left_coords: { x: number; y: number } };
 
   modeStore.subscribe((value) => (mode = value));
-  mapStore.subscribe((value) => map = value)
-  mapParametersStore.subscribe((value) => mapParams = value)
+  mapStore.subscribe((value) => (map = value));
+  mapParametersStore.subscribe((value) => (mapParams = value));
 
   const init = () => {
     // код, который исполняется при создании сетки
@@ -87,29 +87,30 @@
     // }
     cxwidth = cx.inx(width);
     cxheight = cx.inx(height);
-    if(map && map.length != 0 && mapParams){
-      for(let i = 0; i < map.length; i++){
-        for(let j = 0; j < map[i].length; j++){
+    if (map && map.length != 0 && mapParams) {
+      for (let i = 0; i < map.length; i++) {
+        for (let j = 0; j < map[i].length; j++) {
           cx.fill(color.black);
           let flag = true;
-          if(map[i][j] == -1){
+          if (map[i][j] == -1) {
             flag = false;
             continue;
+          } else if (map[i][j] == -2) {
+            cx.fill(color.dark);
+          } else if (map[i][j] == 2) {
+            cx.fill(color.red);
+          } else if (0 <= map[i][j] && map[i][j] <= 1) {
+            cx.fill(
+              "#00" + Math.round(255 - 255 * map[i][j]).toString(16) + "00"
+            );
           }
-          else if(map[i][j] == -2){
-            cx.fill(color.dark)
-          }
-          else if(map[i][j] == 2){
-            cx.fill(color.red)
-          }
-          else if(0 <= map[i][j] && map[i][j] <= 1){
-            cx.fill('#00' + (Math.round(255 - 255*map[i][j])).toString(16) + '00')
-          }
-          if(flag)
-            cx.rect(mapParams.top_left_coords.x + i*roundedScale, 
-              mapParams.top_left_coords.y + j*roundedScale, 
-              roundedScale, 
-              roundedScale)
+          if (flag)
+            cx.rect(
+              mapParams.top_left_coords.x + i * roundedScale,
+              mapParams.top_left_coords.y + j * roundedScale,
+              roundedScale,
+              roundedScale
+            );
         }
       }
     }
@@ -121,24 +122,33 @@
     time = new Date();
   });
   const getChanks = (scale, x, y) => {
-    if((new Date()).getTime() - 2000 > time.getTime()){
-      console.log(cxwidth, cxheight)
-      if(Math.abs(32 - scale*32) < Math.abs(8 - scale*32)){
+    if (new Date().getTime() - 2000 > time.getTime()) {
+      console.log(cxwidth, cxheight);
+      if (Math.abs(32 - scale * 32) < Math.abs(8 - scale * 32)) {
         roundedScale = 1;
-      }
-      else if(Math.abs(8 - scale * 32) < Math.abs(1 - scale * 32)){
+      } else if (Math.abs(8 - scale * 32) < Math.abs(1 - scale * 32)) {
         roundedScale = 8;
-      }
-      else {
+      } else {
         roundedScale = 32;
       }
-      console.log(Math.floor(x - cxwidth/2), Math.floor(y - cxheight/2), roundedScale);
-      console.log(Math.ceil(x + cxwidth/2), Math.ceil(y + cxheight/2));
+      console.log(
+        Math.floor(x - cxwidth / 2),
+        Math.floor(y - cxheight / 2),
+        roundedScale
+      );
+      console.log(Math.ceil(x + cxwidth / 2), Math.ceil(y + cxheight / 2));
       time = new Date();
-      getMapAPI(roundedScale, [
-        {x: Math.floor(x + 1), y: Math.floor(y + 1)},
-        {x: Math.ceil(x - 1), y: Math.ceil(y - 1)}
-      ], [{x: 50, y: 50}, {x: 50, y: 55}])
+      getMapAPI(
+        roundedScale,
+        [
+          { x: Math.floor(x + 1), y: Math.floor(y + 1) },
+          { x: Math.ceil(x - 1), y: Math.ceil(y - 1) },
+        ],
+        [
+          { x: 50, y: 50 },
+          { x: 50, y: 55 },
+        ]
+      );
     }
   };
   $: getChanks(scale, X, Y);

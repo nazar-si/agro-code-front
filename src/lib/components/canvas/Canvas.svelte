@@ -14,7 +14,7 @@
   export let scale;
   export let update;
   export let init = () => {};
-  let scaleBuff = 1 / 2 ** 3;
+  let scaleBuff = 1 / 2 ** 7;
   let minScale = 1 / 2 ** 7.2;
   let maxScale = 1;
 
@@ -226,13 +226,13 @@
       }
     }
     p5.setup = () => {
-      p5.createCanvas(width, height);
+      p5.createCanvas(width, height, p5.WEBGL);
       init();
     };
     let c = new cx();
     p5.draw = () => {
       dark ? p5.background(24, 24, 28) : p5.background(250);
-      p5.translate(p5.width / 2, p5.height / 2);
+      // p5.translate(p5.width / 2, p5.height / 2);
 
       scale = scale + (scaleBuff - scale) * 0.2;
       c.mouseX = p5.mouseX;
