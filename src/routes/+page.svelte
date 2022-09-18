@@ -100,16 +100,14 @@
           } else if (map[i][j] == 2) {
             cx.fill(color.red);
           } else if (0 <= map[i][j] && map[i][j] <= 1) {
-            cx.fill(
-              "#00" + Math.round(255 - 255 * map[i][j]).toString(16) + "00"
-            );
+            cx.fill(0, 255 - 255 * map[i][j], 0);
           }
           if (flag)
             cx.rect(
-              mapParams.top_left_coords.x + i * roundedScale,
-              mapParams.top_left_coords.y + j * roundedScale,
-              roundedScale,
-              roundedScale
+              mapParams.top_left_coords.x + i * roundedScale + 0.1,
+              mapParams.top_left_coords.y + j * roundedScale + 0.1,
+              roundedScale - 0.2,
+              roundedScale - 0.2
             );
         }
       }
