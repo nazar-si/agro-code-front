@@ -92,6 +92,16 @@
           ...(bl ? [this.uv(tr), this.uv(br), this.uv(bl)] : [])
         );
       }
+      rectDetail(x, y, w, h, detailX, detailY) {
+        p5.rect(
+          this.uvx(x),
+          this.uvy(y),
+          this.uv(w),
+          this.uv(h),
+          detailX,
+          detailY
+        );
+      }
       ellipse(x, y, w, h = undefined, detail = undefined) {
         p5.ellipse(
           this.uvx(x),
@@ -295,11 +305,16 @@
     };
     p5.mouseClicked = (e) => {
       if (c.mouseOutside) return;
-      if (c.mx > -15 && c.mx <= 16 && c.my > -15 && c.my <= 16) {
-        $selectedCoord = [Math.floor(c.mx), Math.floor(c.my)];
-        $selectedVal = gval;
+      if (c.mx > 0 && c.mx <= 4097 && c.my > 0 && c.my <= 4097) {
+        if (e.shiftKey) {
+          let val = $selectedCoord;
+          val.push([Math.floor(c.mx), Math.floor(c.my)]);
+          $selectedCoord = val;
+        } else {
+          $selectedCoord = [[Math.floor(c.mx), Math.floor(c.my)]];
+        }
       } else {
-        $selectedCoord = [null, null];
+        $selectedCoord = [];
       }
     };
     p5.mouseReleased = (e) => {

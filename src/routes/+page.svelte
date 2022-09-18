@@ -106,11 +106,13 @@
             cx.fill(52, 211, 153, 255 - 255 * map[i][j]);
           }
           if (flag)
-            cx.rect(
+            cx.rectDetail(
               mapParams.top_left_coords.x + (i + 0.1) * roundedScale,
               mapParams.top_left_coords.y + (j + 0.1) * roundedScale,
               roundedScale * 0.8,
-              roundedScale * 0.8
+              roundedScale * 0.8,
+              1,
+              1
             );
         }
       }
@@ -164,7 +166,7 @@
 <button>По по параметрам производства</button> -->
 
 <div class="wrapper">
-  <LayoutSwitch isBuilding={isBuilding} isDigits={isDigits} />
+  <LayoutSwitch {isBuilding} {isDigits} />
   <side style:width="{sideWidth}px"><Side bind:dark /> </side>
   <main bind:clientHeight={height} bind:clientWidth={width}>
     <Canvas

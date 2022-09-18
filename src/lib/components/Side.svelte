@@ -80,7 +80,7 @@
     <Divider align="left" mt={4}>Данные выбранной ячеки</Divider>
     <span>
       Положение:
-      <span class="text-primary">{$selectedCoord[0]},{$selectedCoord[1]}</span>
+      <span class="text-primary">{$selectedCoord.toString()}</span>
       <br />
       <span />Индекс соответствия:
       <span class="text-primary">{$selectedVal}</span></span
