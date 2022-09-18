@@ -16,7 +16,7 @@ const config = {
     //   external: [],
     //   split: false,
     // }),
-    adapter: adapter();
+    adapter: adapter(),
 
     methodOverride: {
       allowed: ["PATCH", "DELETE"],
