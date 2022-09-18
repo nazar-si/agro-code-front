@@ -1,5 +1,5 @@
 <script>
-	import { cornersStore } from './../store';
+  import { cornersStore } from "./../store";
   import Switch from "./ui/Switch.svelte";
   import Multiple from "./ui/Multiple.svelte";
   import Input from "./ui/Input.svelte";
@@ -9,7 +9,6 @@
   import color from "$lib/color";
   import { selectedCoord, selectedVal } from "$lib/stores/grid";
   export let dark = false;
-  $: console.log($selectedCoord)
   let mode = "similiar";
   modeStore.subscribe((value) => (mode = value));
 
@@ -114,13 +113,16 @@
       Положение: <br />
       <span class="text-primary">
         {#each $selectedCoord as coord}
-        {coord[0]}, { coord[1]} <br />
+          {coord[0]}, {coord[1]} <br />
         {/each}
       </span>
     </span>
-    <button class="norm" on:click={() => {
-      getMapAPI($scaleStore, $cornersStore, $pixelsStore)
-    }}>Найти похожие</button>
+    <button
+      class="norm"
+      on:click={() => {
+        getMapAPI($scaleStore, $cornersStore, $pixelsStore);
+      }}>Найти похожие</button
+    >
   {/if}
 </div>
 
