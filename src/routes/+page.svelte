@@ -3,7 +3,7 @@
   import Canvas from "$lib/components/canvas/Canvas.svelte";
   import Side from "$lib/components/Side.svelte";
   import color from "$lib/color";
-  import { modeStore, mapStore, mapParametersStore } from "$lib/store";
+  import { modeStore, mapStore, mapParametersStore, pixelsStore } from "$lib/store";
   import { onDestroy, onMount } from "svelte";
   import LayoutSwitch from "$lib/components/LayoutSwitch.svelte";
   import json from "./test.json";
@@ -27,12 +27,14 @@
   export let isDigits = false;
 
   let map = [];
+  let pixels: {x: number, y: number}[] = [];
   let mode: "similiar" | "parameters" | "profi";
   let mapParams: { size: number; top_left_coords: { x: number; y: number } };
 
   modeStore.subscribe((value) => (mode = value));
   mapStore.subscribe((value) => (map = value));
   mapParametersStore.subscribe((value) => (mapParams = value));
+  pixelsStore.subscribe((value) => pixels = value);
 
   const init = () => {
     // код, который исполняется при создании сетки
@@ -144,10 +146,7 @@
           { x: Math.floor(x + 1), y: Math.floor(y + 1) },
           { x: Math.ceil(x - 1), y: Math.ceil(y - 1) },
         ],
-        [
-          { x: 50, y: 50 },
-          { x: 50, y: 55 },
-        ]
+        pixels
       );
     }
   };
