@@ -23,6 +23,8 @@
   let Y = 2048;
   let time = new Date();
   let cxwidth, cxheight;
+  export let isBuilding = true;
+  export let isDigits = false;
 
   let map = [];
   let mode: "similiar" | "parameters" | "profi";
@@ -161,7 +163,7 @@
 <button>По по параметрам производства</button> -->
 
 <div class="wrapper">
-  <LayoutSwitch />
+  <LayoutSwitch isBuilding={isBuilding} isDigits={isDigits} />
   <side style:width="{sideWidth}px"><Side bind:dark /> </side>
   <main bind:clientHeight={height} bind:clientWidth={width}>
     <Canvas
