@@ -44,6 +44,9 @@
     </button>
     <h3>Agro code</h3>
   </div>
+  <Divider align="left">Какая-то секция</Divider>
+  <button class="norm">Выбор по схожим полям</button>
+  <button class="norm">Выбор по параметрам</button>
   <Divider align="left">Основные параметры</Divider>
   <Multiple
     type="text"
@@ -101,6 +104,12 @@
     }
     .theme {
       @apply w-8 h-8 flex items-center justify-center border-1 border-gray-300 rounded-md gdark:border-gray-600;
+    }
+  }
+  button.norm {
+    @apply bg-primary-500 text-gray-50 font-semibold text-base rounded-md p-1 my-2;
+    &:first-of-type {
+      @apply -mb-2;
     }
   }
 </style>
