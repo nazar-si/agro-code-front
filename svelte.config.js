@@ -11,11 +11,12 @@ const config = {
   ],
 
   kit: {
-    adapter: vercel({
-      edge: false,
-      external: [],
-      split: false,
-    }),
+    // adapter: vercel({
+    //   edge: false,
+    //   external: [],
+    //   split: false,
+    // }),
+    adapter: adapter();
 
     methodOverride: {
       allowed: ["PATCH", "DELETE"],
