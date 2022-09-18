@@ -87,6 +87,7 @@
     // }
     cxwidth = cx.inx(width);
     cxheight = cx.inx(height);
+
     if (map && map.length != 0 && mapParams) {
       for (let i = 0; i < map.length; i++) {
         for (let j = 0; j < map[i].length; j++) {
@@ -100,14 +101,14 @@
           } else if (map[i][j] == 2) {
             cx.fill(color.red);
           } else if (0 <= map[i][j] && map[i][j] <= 1) {
-            cx.fill(0, 255 - 255 * map[i][j], 0);
+            cx.fill(52, 211, 153, 255 - 255 * map[i][j]);
           }
           if (flag)
             cx.rect(
-              mapParams.top_left_coords.x + i * roundedScale + 0.1,
-              mapParams.top_left_coords.y + j * roundedScale + 0.1,
-              roundedScale - 0.2,
-              roundedScale - 0.2
+              mapParams.top_left_coords.x + (i + 0.1) * roundedScale,
+              mapParams.top_left_coords.y + (j + 0.1) * roundedScale,
+              roundedScale * 0.8,
+              roundedScale * 0.8
             );
         }
       }
