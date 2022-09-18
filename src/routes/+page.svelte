@@ -120,7 +120,6 @@
       }
     }
   };
-
   onMount(() => {
     if (mode == "profi") modeStore.set("similiar");
     dark = document.body.classList.contains("dark");
@@ -145,8 +144,8 @@
       getMapAPI(
         roundedScale,
         [
-          { x: Math.floor(x + 1), y: Math.floor(y + 1) },
-          { x: Math.ceil(x - 1), y: Math.ceil(y - 1) },
+          { x: Math.floor(x + 3*roundedScale), y: Math.floor(y + 3*roundedScale) },
+          { x: Math.ceil(x - 3*roundedScale), y: Math.ceil(y - 3*roundedScale) },
         ],
         pixels
       );

@@ -1,14 +1,15 @@
 <script>
+	import { cornersStore } from './../store';
   import Switch from "./ui/Switch.svelte";
   import Multiple from "./ui/Multiple.svelte";
   import Input from "./ui/Input.svelte";
   import Divider from "./ui/Divider.svelte";
   import { Moon, Sun } from "tabler-icons-svelte";
-  import { modeStore } from "$lib/store";
+  import { modeStore, scaleStore, pixelsStore } from "$lib/store";
   import color from "$lib/color";
   import { selectedCoord, selectedVal } from "$lib/stores/grid";
   export let dark = false;
-
+  $: console.log($selectedCoord)
   let mode = "similiar";
   modeStore.subscribe((value) => (mode = value));
 
@@ -32,6 +33,7 @@
     { label: "Сладкое", value: 3 },
   ];
   import Select from "./ui/Select.svelte";
+  import { getMapAPI } from "$lib/client";
 </script>
 
 <div class="wrapper">
@@ -49,7 +51,7 @@
     </button>
     <h3>Agro code</h3>
   </div>
-  <Divider align="left">Какая-то секция</Divider>
+  <Divider align="left">Выбор режима</Divider>
   <div class="row buttons">
     <button
       class="norm"
@@ -97,18 +99,28 @@
         <Divider align="left" mt={4}>Данные выбранной ячеки</Divider>
         <span>
           Положение:
-          <span class="text-primary"
-            >{$selectedCoord[0]},{$selectedCoord[1]}</span
-          >
+          <span class="text-primary">
+            {$selectedCoord[0]},{$selectedCoord[1]}
+          </span>
           <br />
           <span />Индекс соответствия:
-          <span class="text-primary">{$selectedVal}</span></span
-        >
+          <span class="text-primary">{$selectedVal}</span>
+        </span>
       {/if}
     </div>
   {/if}
   {#if mode == "similiar"}
-    Выберете несколько существующих полей
+    <span>
+      Положение: <br />
+      <span class="text-primary">
+        {#each $selectedCoord as coord}
+        {coord[0]}, { coord[1]} <br />
+        {/each}
+      </span>
+    </span>
+    <button class="norm" on:click={() => {
+      getMapAPI($scaleStore, $cornersStore, $pixelsStore)
+    }}>Найти похожие</button>
   {/if}
 </div>
 
