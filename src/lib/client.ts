@@ -16,7 +16,6 @@ export const loginAPI = (login: string, password: string) => {
     })
     .then((response) => response.json())
     .then((json: any) => {
-        console.log(json)
         localStorage.setItem('token', json.token)
     })
     
@@ -35,7 +34,6 @@ export const registerAPI = (login: string, password: string) => {
     })
     .then((response) => response.json())
     .then((json: any) => {
-        console.log(json.token)
         localStorage.setItem('token', json.token)
     })
 }
@@ -54,7 +52,7 @@ export const getUserVinoyardsAPI = () => {
         })
         .then((response) => response.json())
         .then((json: any) => {
-            console.log(json)
+            
         })
     }
 }
@@ -74,7 +72,7 @@ export const setUserVinoyardsAPI = (vinoyards: []) => {
         })
         .then((response) => response.json())
         .then((json: any) => {
-            console.log(json)
+            
         })
     }
 }
@@ -113,7 +111,7 @@ export const getMapAPI = (scale: 32 | 8 | 1, corners: cord[], pixels: cord[]) =>
     })
     .then((response) => response.json())
     .then((json: any) => {
-        console.log(json)
+        
         mapStore.set(json.data)
         mapParametersStore.set(json.params)
     })

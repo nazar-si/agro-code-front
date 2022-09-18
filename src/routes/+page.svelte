@@ -123,7 +123,6 @@
   });
   const getChanks = (scale, x, y) => {
     if (new Date().getTime() - 2000 > time.getTime()) {
-      console.log(cxwidth, cxheight);
       if (Math.abs(32 - scale * 32) < Math.abs(8 - scale * 32)) {
         roundedScale = 1;
       } else if (Math.abs(8 - scale * 32) < Math.abs(1 - scale * 32)) {
@@ -131,12 +130,12 @@
       } else {
         roundedScale = 32;
       }
-      console.log(
-        Math.floor(x - cxwidth / 2),
-        Math.floor(y - cxheight / 2),
-        roundedScale
-      );
-      console.log(Math.ceil(x + cxwidth / 2), Math.ceil(y + cxheight / 2));
+      // console.log(
+      //   Math.floor(x - cxwidth / 2),
+      //   Math.floor(y - cxheight / 2),
+      //   roundedScale
+      // );
+      // console.log(Math.ceil(x + cxwidth / 2), Math.ceil(y + cxheight / 2));
       time = new Date();
       getMapAPI(
         roundedScale,
