@@ -117,7 +117,7 @@ export const getMapAPI = (scale: 32 | 8 | 1, corners: cord[], pixels: cord[]) =>
     })
     .then((response) => response.json())
     .then((json: any) => {
-        // console.log(json)
+        console.log(json)
         mapStore.set(json.data)
         mapParametersStore.set(json.params)
     })

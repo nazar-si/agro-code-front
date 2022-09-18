@@ -7,7 +7,7 @@
   import { onDestroy, onMount } from "svelte";
   import LayoutSwitch from "$lib/components/LayoutSwitch.svelte";
   import json from './test.json';
-    import { ArrowRightBar } from 'tabler-icons-svelte';
+    import { ArrowRightBar, Yoga } from 'tabler-icons-svelte';
 
   let width;
   let height;
@@ -91,21 +91,25 @@
       for(let i = 0; i < map.length; i++){
         for(let j = 0; j < map[i].length; j++){
           cx.fill(color.black);
-          if(map[i][j] == -1)
+          let flag = true;
+          if(map[i][j] == -1){
+            flag = false;
             continue;
-          if(map[i][j] == -2){
+          }
+          else if(map[i][j] == -2){
             cx.fill(color.dark)
           }
           else if(map[i][j] == 2){
-            cx.fill(color.accent)
+            cx.fill(color.red)
           }
           else if(0 <= map[i][j] && map[i][j] <= 1){
             cx.fill('#00' + (Math.round(255 - 255*map[i][j])).toString(16) + '00')
           }
-          cx.rect(mapParams.top_left_coords.x + i*roundedScale, 
-            mapParams.top_left_coords.y + j*roundedScale, 
-            roundedScale, 
-            roundedScale)
+          if(flag)
+            cx.rect(mapParams.top_left_coords.x + i*roundedScale, 
+              mapParams.top_left_coords.y + j*roundedScale, 
+              roundedScale, 
+              roundedScale)
         }
       }
     }
@@ -118,6 +122,7 @@
   });
   const getChanks = (scale, x, y) => {
     if((new Date()).getTime() - 2000 > time.getTime()){
+      console.log(cxwidth, cxheight)
       if(Math.abs(32 - scale*32) < Math.abs(8 - scale*32)){
         roundedScale = 1;
       }
@@ -127,12 +132,12 @@
       else {
         roundedScale = 32;
       }
-      console.log(Math.floor(x + cxwidth/2), Math.floor(y + cxheight/2), roundedScale);
-      console.log(Math.ceil(x + cxwidth), Math.ceil(y + cxheight));
+      console.log(Math.floor(x - cxwidth/2), Math.floor(y - cxheight/2), roundedScale);
+      console.log(Math.ceil(x + cxwidth/2), Math.ceil(y + cxheight/2));
       time = new Date();
       getMapAPI(roundedScale, [
-        {x: Math.floor(x + cxwidth/2), y: Math.floor(y + cxheight/2)},
-        {x: Math.ceil(x + cxwidth), y: Math.ceil(y + cxheight)}
+        {x: Math.floor(x + 1), y: Math.floor(y + 1)},
+        {x: Math.ceil(x - 1), y: Math.ceil(y - 1)}
       ], [{x: 50, y: 50}, {x: 50, y: 55}])
     }
   };
